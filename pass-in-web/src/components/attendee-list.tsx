@@ -1,4 +1,5 @@
 import { Search, MoreHorizontal, ChevronsLeft, ChevronLeft, ChevronsRight, ChevronRight } from "lucide-react"
+import { IconButton } from "./icon-button"
 
 export const AttendeeList = () => {
   return (
@@ -45,9 +46,9 @@ export const AttendeeList = () => {
                   <td className="py-3 px-4 text-sm text-zinc-300">7 dias atrás</td>
                   <td className="py-3 px-4 text-sm text-zinc-300">3 dias atrás</td>
                   <td className="py-3 px-4 text-sm text-zinc-300">
-                    <button className="border border-white/10 rounded bg-black/20 p-1.5">
+                    <IconButton transparent>
                       <MoreHorizontal className="size-4"  />
-                    </button>
+                    </IconButton>
                   </td>
                 </tr>
               )
@@ -63,21 +64,21 @@ export const AttendeeList = () => {
                 <span>Página 1 de 10</span>
 
                 <div className="flex gap-1.5">
-                  <button className="border border-white/10 rounded bg-white/10 p-1.5">
+                  <IconButton>
                         <ChevronsLeft className="size-4"  />
-                  </button>
+                  </IconButton>
 
-                  <button className="border border-white/10 rounded bg-white/10 p-1.5">
+                  <IconButton>
                       <ChevronLeft className="size-4"  />
-                  </button>
+                  </IconButton>
 
-                  <button className="border border-white/10 rounded bg-white/10 p-1.5">
+                  <IconButton>
                       <ChevronsRight className="size-4"  />
-                  </button>
+                  </IconButton>
 
-                  <button className="border border-white/10 rounded bg-white/10 p-1.5">
+                  <IconButton>
                       <ChevronRight className="size-4"  />
-                  </button>
+                  </IconButton>
                 </div>
                 </div>
               </td>
