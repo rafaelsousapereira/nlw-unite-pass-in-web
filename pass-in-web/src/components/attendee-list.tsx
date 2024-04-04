@@ -9,6 +9,7 @@ import {
 import { IconButton } from "./icon-button";
 import { Table } from "./table/table";
 import { TableHeader } from "./table/table-header";
+import { TableCell } from "./table/table-cell";
 
 export const AttendeeList = () => {
   return (
@@ -36,18 +37,10 @@ export const AttendeeList = () => {
               />
             </TableHeader>
 
-            <TableHeader>
-              Código
-            </TableHeader>
-            <TableHeader>
-              Participantes
-            </TableHeader>
-            <TableHeader>
-              Data de inscrição
-            </TableHeader>
-            <TableHeader>
-              Data do check-in
-            </TableHeader>
+            <TableHeader>Código</TableHeader>
+            <TableHeader>Participantes</TableHeader>
+            <TableHeader>Data de inscrição</TableHeader>
+            <TableHeader>Data do check-in</TableHeader>
             <TableHeader style={{ width: 64 }} />
           </tr>
         </thead>
@@ -56,32 +49,28 @@ export const AttendeeList = () => {
           {Array.from({ length: 10 }).map((_, i) => {
             return (
               <tr key={i} className="border-b border-white/10 hover:bg-white/5">
-                <td className="py-3 px-4 text-sm text-zinc-300">
+                <TableCell>
                   <input
                     type="checkbox"
                     className="size-4 bg-black/20 border border-white/10 rounded"
                   />
-                </td>
-                <td className="py-3 px-4 text-sm text-zinc-300">52716</td>
-                <td className="py-3 px-4 text-sm text-zinc-300">
+                </TableCell>
+                <TableCell>52716</TableCell>
+                <TableCell>
                   <div className="flex flex-col gap-1">
                     <span className="text-white font-semibold">
                       Diego Schell Fernandes
                     </span>
                     <span>diego.schell.f@gmail.com</span>
                   </div>
-                </td>
-                <td className="py-3 px-4 text-sm text-zinc-300">
-                  7 dias atrás
-                </td>
-                <td className="py-3 px-4 text-sm text-zinc-300">
-                  3 dias atrás
-                </td>
-                <td className="py-3 px-4 text-sm text-zinc-300">
+                </TableCell>
+                <TableCell>7 dias atrás</TableCell>
+                <TableCell>3 dias atrás</TableCell>
+                <TableCell>
                   <IconButton transparent>
                     <MoreHorizontal className="size-4" />
                   </IconButton>
-                </td>
+                </TableCell>
               </tr>
             );
           })}
