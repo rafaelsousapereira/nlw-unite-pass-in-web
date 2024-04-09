@@ -31,20 +31,32 @@ export const AttendeeList = () => {
   
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState("")
+
+  const [total, setTotal] = useState(0)
   const [attendees, setAttendees] = useState<Attendee[]>([])
   
-  const totalPages = Math.ceil(attendees.length / 10)
+  const totalPages = Math.ceil(total / 10)
 
   useEffect(() => {
-    fetch("http://localhost:3333/events/9e9bd979-9d10-4915-b339-3786b1634f33/attendees")
+    const url = new URL("http://localhost:3333/events/9e9bd979-9d10-4915-b339-3786b1634f33/attendees")
+    
+    url.searchParams.set("pageIndex", String(page - 1))
+
+    if (search.length > 0) {
+      url.searchParams.set("query", search)
+    }
+
+    fetch(url)
       .then(response => response.json())
       .then(data => {
         setAttendees(data.attendees)
+        setTotal(data.total)
       })
-  }, [page])
+  }, [page, search])
   
   const onSearchInputChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value)
+    setPage(1)
   }
 
   const goToFirstPage = () => {
@@ -71,13 +83,12 @@ export const AttendeeList = () => {
         <div className="px-3 w-72 py-1.5 border border-white/10 rounded-lg text-sm flex items-center gap-3">
           <Search className="size-4 text-emerald-300" />
           <input
-            className="bg-transparent flex-1 outline-none border-0 p-0 h-auto text-sm"
+            className="bg-transparent flex-1 outline-none border-0 p-0 h-auto text-sm focus:ring-0"
             type="text"
             placeholder="Buscar participantes..."
             onChange={onSearchInputChanged}
           />
         </div>
-          {search}
       </div>
 
       <Table>
@@ -133,7 +144,7 @@ export const AttendeeList = () => {
         <tfoot>
           <tr>
             <TableCell colSpan={3}>
-              Mostrando 10 de {attendees.length} itens
+              Mostrando 10 de {total} itens
             </TableCell>
             <TableCell colSpan={3} className="text-right">
               <div className="inline-flex gap-8 items-center">
