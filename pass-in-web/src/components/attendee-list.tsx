@@ -29,8 +29,25 @@ interface Attendee {
 
 export const AttendeeList = () => {
   
-  const [page, setPage] = useState(1)
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState(() => {
+    const url = new URL(window.location.toString())
+
+    if (url.searchParams.has("search")) {
+      return url.searchParams.get("search") ?? ''
+    }
+
+    return ''
+  })
+
+  const [page, setPage] = useState(() => {
+    const url = new URL(window.location.toString())
+
+    if (url.searchParams.has("page")) {
+      return Number(url.searchParams.get("page"))
+    }
+
+    return 1
+  })
 
   const [total, setTotal] = useState(0)
   const [attendees, setAttendees] = useState<Attendee[]>([])
@@ -53,26 +70,48 @@ export const AttendeeList = () => {
         setTotal(data.total)
       })
   }, [page, search])
+
+  const setCurrentSearch = (search: string) => {
+    const url = new URL(window.location.toString())
   
-  const onSearchInputChanged = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value)
-    setPage(1)
+    url.searchParams.set("search", search)
+
+    window.history.pushState({}, "", url)
+
+    setSearch(search)
+  }
+  
+  const setCurrentPage = (page: number) => {
+    const url = new URL(window.location.toString())
+  
+    url.searchParams.set("page", String(page))
+
+    window.history.pushState({}, "", url)
+
+    setPage(page)
   }
 
+  const onSearchInputChanged = (event: ChangeEvent<HTMLInputElement>) => {
+    setCurrentSearch(event.target.value)
+    setCurrentPage(1)
+  }
+
+
   const goToFirstPage = () => {
-    setPage(1)
+    setCurrentPage(1)
   }
 
   const goToLastPage = () => {
-    setPage(totalPages)
+    setCurrentPage(totalPages)
   }
 
   const goToPreviusPage = () => {
-    setPage(page - 1)
-  }
+    setCurrentPage(page - 1)
 
+  }
+  
   const goToNextPage = () => {
-    setPage(page + 1)
+    setCurrentPage(page + 1)
   }
 
   return (
@@ -87,6 +126,7 @@ export const AttendeeList = () => {
             type="text"
             placeholder="Buscar participantes..."
             onChange={onSearchInputChanged}
+            value={search}
           />
         </div>
       </div>
